@@ -450,7 +450,8 @@ m_CosTheta = cmax*( -1.0 + 2.0* Xarg[iarg] ); iarg++;
 //==========================================================
 
 m_r1=0.0; m_r2=0.0;
-int optGauss = 2;   // Gaussian BES with/without mapping
+// int optGauss = 1;   // Gaussian BES without mapping
+int optGauss = 0;   // Gaussian BES with mapping
 //////////////////  Beam spread ///////////////////////
 if(        DB->KeyBES == 0){
   m_Ebeam1  = 0.5*m_CMSene;

@@ -23,7 +23,7 @@ BeginX
 *   17            1e0      vvmax =xpar(17)  if 1e0 then reduced inside program
 *indx_____data______ccccccccc0ccccc________Process______ccc0ccccccccc0ccccccccc0
 **  Beam Energy Spread type
-   25              1      KeyBES BES, =0 none, =1 Gausian, =2 beamsstrahlung
+   25              1      KeyBES BES, =0 none, =1 Gaussian without mapping, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization), =3 Gaussian with mapping
 *indx_____data______ccccccccc0ccccccccc0ccccccccc0ccccccccc0ccccccccc0ccccccccc0
    80        50.00e0      ParBES(0) beam1 energy in case of BES
    81        50.00e0      ParBES(1) beam2 energy in case of BES

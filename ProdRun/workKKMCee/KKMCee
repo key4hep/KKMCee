@@ -187,7 +187,7 @@ BeginX
 EOF
    if test "x${_DOBES}" = "xyes"; then
 cat >> ./pro.input <<EOF
-   25              1      KeyBES BES, =0 none, =1 Gaussian, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization)
+   25              3      KeyBES BES, =0 none, =1 Gaussian without mapping, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization), =3 Gaussian with mapping
 *indx_____data______ccccccccc0ccccccccc0ccccccccc0ccccccccc0ccccccccc0ccccccccc0
    80       0.0e0         ParBES(0) E1=0 will be replaced by CMSene/2
    81       0.0e0         ParBES(1) E2=0 will be replaced by CMSene/2
@@ -197,7 +197,7 @@ cat >> ./pro.input <<EOF
 EOF
    else
 cat >> ./pro.input <<EOF
-   25              0      KeyBES BES, =0 none, =1 Gaussian, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization)
+   25              0      KeyBES BES, =0 none, =1 Gaussian without mapping, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization), =3 Gaussian with mapping
 EOF
    fi
 cat >> ./pro.input <<EOF

@@ -450,54 +450,55 @@ m_CosTheta = cmax*( -1.0 + 2.0* Xarg[iarg] ); iarg++;
 //==========================================================
 
 m_r1=0.0; m_r2=0.0;
-// int optGauss = 1;   // Gaussian BES without mapping
-int optGauss = 0;   // Gaussian BES with mapping
 //////////////////  Beam spread ///////////////////////
 if(        DB->KeyBES == 0){
   m_Ebeam1  = 0.5*m_CMSene;
   m_Ebeam2  = 0.5*m_CMSene;
-}
-else if(   DB->KeyBES == 1){
+} else if( DB->KeyBES == 1){
+  // Gaussian without mapping
   double E1,E2,sigma1,sigma2,sigma,corho,delE1,delE2,dGauss;
   E1    = m_ParBES[0];
   E2    = m_ParBES[1];
   sigma1= m_ParBES[2]*E1;
   sigma2= m_ParBES[3]*E2;
   corho = m_ParBES[4];
-  if( optGauss==1){
-   sigma = sqrt(sigma1*sigma2);
-   delE1 = 10*sigma*(2*Xarg[iarg]-1.0); iarg++; // range is +-10sigma
-   delE2 = 10*sigma*(2*Xarg[iarg]-1.0); iarg++; // range is +-10sigma
-   Rho *= sqr(20*sigma);  // Jacobian
-   m_r1 = delE1/E1; // can be negative
-   m_r2 = delE2/E2; // can be negative
-   m_Ebeam1  = E1+delE1; // =E1*(1+m_r1)
-   m_Ebeam2  = E2+delE2; // =E2*(1+m_r2)
+  sigma = sqrt(sigma1*sigma2);
+  delE1 = 10*sigma*(2*Xarg[iarg]-1.0); iarg++; // range is +-10sigma
+  delE2 = 10*sigma*(2*Xarg[iarg]-1.0); iarg++; // range is +-10sigma
+  Rho *= sqr(20*sigma);  // Jacobian
+  m_r1 = delE1/E1; // can be negative
+  m_r2 = delE2/E2; // can be negative
+  m_Ebeam1  = E1+delE1; // =E1*(1+m_r1)
+  m_Ebeam2  = E2+delE2; // =E2*(1+m_r2)
   //dGauss= BESdist(m_Ebeam1, m_Ebeam2, m_ParBES);
-   if (m_UserBESdist) { // using external user provided function
-       dGauss = (*m_UserBESdist)(m_Ebeam1, m_Ebeam2, m_ParBES);
-     } else { // using "predefined" internal method
-       dGauss = BESdist(m_Ebeam1, m_Ebeam2, m_ParBES);
-     }// if
-   Rho *= dGauss;
-  }else{
-   // mapping of Patrick Janot for 2-dim Gaussian BES with optional correlation
-   // in this case Jacobian*distribution=1, and is omitted.
-   double r1 = Xarg[iarg]; iarg++;
-   double r2 = Xarg[iarg]; iarg++;
-   double x1 = sqrt(-2.*log(r1)) * cos(2.*M_PI*r2);
-   double x2 = sqrt(-2.*log(r1)) * sin(2.*M_PI*r2);
-   double y1 = x1;
-   double y2 = corho * x1 + sqrt(1.-corho*corho) * x2;
-   m_r1= y1 * m_ParBES[2]; // can be negative
-   m_r2= y2 * m_ParBES[3]; // can be negative
-   m_Ebeam1 = E1 * (1.0 + m_r1);
-   m_Ebeam2 = E2 * (1.0 + m_r2);
-  }//if optGauss
+  if (m_UserBESdist) { // using external user provided function
+    dGauss = (*m_UserBESdist)(m_Ebeam1, m_Ebeam2, m_ParBES);
+  } else { // using "predefined" internal method
+    dGauss = BESdist(m_Ebeam1, m_Ebeam2, m_ParBES);
+  }// if
+  Rho *= dGauss;
+} else if( DB->KeyBES == 3){
+  // Gaussian with mapping
+  // mapping of Patrick Janot for 2-dim Gaussian BES with optional correlation
+  // in this case Jacobian*distribution=1, and is omitted.
+  double E1,E2,corho;
+  E1    = m_ParBES[0];
+  E2    = m_ParBES[1];
+  corho = m_ParBES[4];
+  double r1 = Xarg[iarg]; iarg++;
+  double r2 = Xarg[iarg]; iarg++;
+  double x1 = sqrt(-2.*log(r1)) * cos(2.*M_PI*r2);
+  double x2 = sqrt(-2.*log(r1)) * sin(2.*M_PI*r2);
+  double y1 = x1;
+  double y2 = corho * x1 + sqrt(1.-corho*corho) * x2;
+  m_r1= y1 * m_ParBES[2]; // can be negative
+  m_r2= y2 * m_ParBES[3]; // can be negative
+  m_Ebeam1 = E1 * (1.0 + m_r1);
+  m_Ebeam2 = E2 * (1.0 + m_r2);
 } else if( DB->KeyBES == 2){
-// Linear Collider case. Beamstrahlung following CIRCE parametrization.
-// delta is the "infinitesimal" width of Gaussian representation
-// of the Dirac delta in the circe spectrum. It is adjusted empirically.
+  // Linear Collider case. Beamstrahlung following CIRCE parametrization.
+  // delta is the "infinitesimal" width of Gaussian representation
+  // of the Dirac delta in the circe spectrum. It is adjusted empirically.
   double delta = 0.0005;
   m_r1  = Xarg[iarg]; iarg++; // always positive
   m_r2  = Xarg[iarg]; iarg++; // always positive

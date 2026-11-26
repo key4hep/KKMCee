@@ -61,7 +61,7 @@ BeginX
 **\\\\SPECIAL tests: fixed FSR multiplicity\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
    24              0\\\\\\mltFSR\\\\\\\\\\\Default is  0\\\\\\\\\\\\\\\\\\\\\\\\
 **  Beam Energy Spread type
-   25              0      KeyBES BES, =0 none, =1 Gausian, =2 beamsstrahlung
+   25              0      KeyBES BES, =0 none, =1 Gaussian without mapping, =2 Beamstrahlung (Linear Collider case, CIRCE parametrization), =3 Gaussian with mapping
 *(\\\\SPECIAL tests: mass terms in crude MC photon distrib.\\\\\\\\\\\\\\\\\\\\\
    26              0\\\\\\KeyWtm\\\\\\\\\\ Default is  0\\\\\\\\\\\\\\\\\\\\\\\\
 **    Interference ISR/FSR to be ON/OFF
